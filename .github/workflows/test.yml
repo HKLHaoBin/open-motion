@@ -1,0 +1,39 @@
+name: Test Open Motion
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: worker
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: worker/package-lock.json
+      - name: Install dependencies
+        run: npm ci
+      - name: Worker tests
+        run: npm test
+      - name: Worker syntax
+        run: npm run check
+      - name: Static syntax
+        working-directory: .
+        run: node --check app.js && node --check auth.js && node --check submit.js && node --check config.js
+      - name: Public secret scan
+        working-directory: .
+        shell: bash
+        run: |
+          ! grep -n -E 'GITHUB_CLIENT_SECRET|SESSION_ENCRYPTION_KEY|OAUTH_STATE_ENCRYPTION_KEY|Bearer gh[pousr]_|ghp_[A-Za-z0-9]{20,}' \
+            app.js auth.js config.js index.html submit.html submit.js styles.css

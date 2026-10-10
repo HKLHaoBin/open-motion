@@ -1,0 +1,11 @@
+# Open Motion Worker 环境配置示例
+# 复制为 .dev.vars 后，再替换本地开发所需的占位值。
+# 生产密钥不要写入仓库；请使用 Cloudflare Wrangler Secrets。
+GITHUB_CLIENT_ID=replace-me
+GITHUB_CLIENT_SECRET=replace-me
+SESSION_ENCRYPTION_KEY=replace-with-a-long-random-value
+OAUTH_STATE_ENCRYPTION_KEY=replace-with-a-long-random-value
+ALLOWED_ORIGIN=http://localhost:4173
+PUBLIC_SITE_URL=http://localhost:4173
+OAUTH_CALLBACK_URL=http://localhost:8787/auth/callback
+COOKIE_SECURE=false

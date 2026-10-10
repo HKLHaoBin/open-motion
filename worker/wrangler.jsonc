@@ -1,0 +1,20 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "open-motion-api",
+  "main": "src/index.js",
+  "compatibility_date": "2025-01-01",
+  "observability": { "enabled": true },
+  "kv_namespaces": [
+    { "binding": "OPEN_MOTION_SESSIONS", "id": "replace-with-production-session-kv-id", "preview_id": "replace-with-preview-session-kv-id" },
+    { "binding": "OPEN_MOTION_FEED", "id": "replace-with-production-feed-kv-id", "preview_id": "replace-with-preview-feed-kv-id" }
+  ],
+  "vars": {
+    "GITHUB_OWNER": "HKLHaoBin",
+    "GITHUB_REPO": "open-motion",
+    "FEED_LIMIT": "30",
+    "FEED_TTL_SECONDS": "900",
+    "SESSION_TTL_SECONDS": "28800",
+    "OAUTH_STATE_TTL_SECONDS": "600",
+    "GITHUB_API_VERSION": "2022-11-28"
+  }
+}

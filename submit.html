@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#141511" />
+    <meta name="description" content="把已有动效项目交给 Agent，自动检查、发布公开仓库并创建 GitHub Discussion。" />
+    <title>交给 Agent 发布 · Open Motion</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23d8ff57'/%3E%3Cpath d='M18 20h28v8H26v8h16v8H26v8h20v8H18z' fill='%23141511'/%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="noise" aria-hidden="true"></div>
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="Open Motion 首页">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span>OPEN MOTION</span>
+      </a>
+      <nav class="main-nav" aria-label="主导航">
+        <a href="index.html#explore">探索</a>
+        <a class="active" href="submit.html">提交动效</a>
+        <a href="index.html#about">关于项目</a>
+      </nav>
+      <div class="header-actions">
+        <a class="github-link" href="https://github.com/HKLHaoBin/open-motion" target="_blank" rel="noopener noreferrer">
+          <span class="github-icon" aria-hidden="true">↗</span>
+          项目仓库
+        </a>
+        <span class="auth-account" id="auth-account" aria-live="polite"></span>
+        <button class="auth-button" id="auth-login" type="button">使用 GitHub 登录</button>
+        <button class="auth-button auth-button-quiet" id="auth-logout" type="button" hidden>退出登录</button>
+      </div>
+    </header>
+
+    <main class="page-shell">
+      <section class="page-heading reveal">
+        <p class="eyebrow"><span class="eyebrow-line"></span>Existing project · Agent publishing</p>
+        <h1>把已有动效<br /><em>交给 Agent。</em></h1>
+        <p>你已经有动效项目。把下面的完整提示词复制到项目根目录中的 Agent，它会从现有代码出发，自动检查、推送公开 GitHub 仓库，并把作品发布到 Open Motion。</p>
+      </section>
+
+      <section class="agent-submit-layout">
+        <div class="agent-panel">
+          <div class="agent-panel-heading">
+            <div>
+              <p class="eyebrow">给 Agent 的任务</p>
+              <h2>你想发布什么动效？</h2>
+            </div>
+            <span class="agent-badge">GH CLI READY</span>
+          </div>
+          <div class="form-field">
+            <label for="agent-goal">告诉 Agent 你想发布什么</label>
+            <textarea id="agent-goal" name="agent-goal" maxlength="1600" placeholder="例如：我想发布一个 30 秒的产品发布片头，内容是新用户首次打开产品，使用黑色和荧光绿，适合在 Open Motion 上分享。"></textarea>
+            <small>只描述你的动效和希望展示的内容。Agent 会在现有项目里完成检查、仓库发布和 Discussion 发布。</small>
+          </div>
+          <div class="agent-options">
+            <div class="form-field">
+              <label for="agent-category">作品分类</label>
+              <select id="agent-category" name="agent-category">
+                <option value="界面演示">界面演示</option>
+                <option value="文字排版">文字排版</option>
+                <option value="信息图解">信息图解</option>
+                <option value="场景叙事">场景叙事</option>
+                <option value="背景特效">背景特效</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button class="button button-primary" id="copy-agent-prompt" type="button">复制完整 Agent 提示词 <span>⧉</span></button>
+          </div>
+          <p class="form-message" id="agent-message" aria-live="polite"></p>
+          <details class="prompt-preview">
+            <summary>查看完整 Agent 提示词</summary>
+            <pre id="agent-prompt-preview"></pre>
+          </details>
+        </div>
+
+        <aside class="submit-aside">
+          <h2>Agent 会自动完成</h2>
+          <p>这页不创建项目，也不要求填写路径。你只需要在已有动效项目的根目录中粘贴一次完整提示词。</p>
+          <ol>
+            <li>读取现有项目的 README、依赖、源码、时间轴、组件、素材和运行脚本。</li>
+            <li>在原项目上完成检查、预览和必要的动效改造，不创建第二个脚手架项目。</li>
+            <li>检查授权、私有素材、密钥和 Git remote；通过 gh auth status 确认发布身份。</li>
+            <li>按需创建或复用公开 GitHub 仓库，推送源码，再用 GitHub CLI 发布 Discussion。</li>
+          </ol>
+          <div class="form-note">提示词不会包含 GitHub token。Agent 只有在认证失败、授权不清楚或可能破坏现有项目时才应暂停，并返回仓库 URL、Discussion URL 和剩余警告。</div>
+        </aside>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-brand"><span class="brand-mark small" aria-hidden="true"><i></i><i></i><i></i></span><span>OPEN MOTION</span></div>
+      <p>公开、可追溯、由 Agent 加速复用。</p>
+      <a href="index.html">返回广场 ↗</a>
+    </footer>
+
+    <script src="config.js"></script>
+    <script src="auth.js" defer></script>
+    <script src="submit.js" defer></script>
+  </body>
+</html>

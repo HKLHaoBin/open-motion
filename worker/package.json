@@ -1,0 +1,14 @@
+{
+  "name": "open-motion-worker",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "check": "node --check src/index.js && node --check src/auth.js && node --check src/github.js && node --check src/http.js && node --check src/crypto.js",
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^4.44.0"
+  }
+}

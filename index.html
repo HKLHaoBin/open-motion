@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#141511" />
+    <meta name="description" content="Open Motion 是一个以 GitHub Discussions 为内容源的开源动效社区。" />
+    <title>Open Motion · 开源动效广场</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23d8ff57'/%3E%3Cpath d='M18 20h28v8H26v8h16v8H26v8h20v8H18z' fill='%23141511'/%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="noise" aria-hidden="true"></div>
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="Open Motion 首页">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span>OPEN MOTION</span>
+      </a>
+      <nav class="main-nav" aria-label="主导航">
+        <a class="active" href="#explore">探索</a>
+        <a href="submit.html">提交动效</a>
+        <a href="#about">关于项目</a>
+      </nav>
+      <div class="header-actions">
+        <a class="github-link" href="https://github.com/HKLHaoBin/open-motion" target="_blank" rel="noopener noreferrer">
+          <span class="github-icon" aria-hidden="true">↗</span>
+          项目仓库
+        </a>
+        <span class="auth-account" id="auth-account" aria-live="polite"></span>
+        <button class="auth-button" id="auth-login" type="button">使用 GitHub 登录</button>
+        <button class="auth-button auth-button-quiet" id="auth-logout" type="button" hidden>退出登录</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" id="about">
+        <div class="hero-copy reveal">
+          <p class="eyebrow"><span class="eyebrow-line"></span>开源动效社区</p>
+          <h1>让动效<br /><em>回到</em> 开源社区。</h1>
+          <p class="hero-description">从 GitHub Discussions 发现、分享和复用动效作品，让每一次创作都留下可追溯的讨论与代码。</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#explore">浏览作品 <span>↓</span></a>
+            <a class="button button-quiet" href="submit.html">提交作品 <span>↗</span></a>
+          </div>
+        </div>
+        <div class="hero-art" aria-label="动效参考到 Agent 改造的动态预览" role="img">
+          <canvas id="hero-canvas" width="900" height="720"></canvas>
+          <div class="hero-scene-label" aria-live="polite">
+            <span class="scene-kicker">REFERENCE → AGENT → REMIX</span>
+            <strong id="hero-scene-title">先看懂一个动效</strong>
+            <span id="hero-scene-detail">视频、时间轴和源码一起进入 Agent 上下文</span>
+          </div>
+          <div class="hero-art-caption"><span>LIVE MOTION INDEX</span><span id="hero-count">COMMUNITY FEED</span></div>
+        </div>
+      </section>
+
+      <section class="intro-strip" aria-label="项目原则">
+        <p>OPEN BY DEFAULT</p>
+        <p>由 GitHub Discussions 驱动</p>
+        <p>作品、介绍、仓库地址都属于创作者</p>
+      </section>
+
+      <section class="collection" id="explore">
+        <div class="section-heading reveal">
+          <div>
+            <p class="eyebrow">发现值得复用的片段</p>
+            <h2>探索动效广场</h2>
+          </div>
+          <p class="section-note">每个条目都把参考媒体、原始讨论和可运行仓库放在一起。找到合适的结构后，直接交给 Agent 改造。</p>
+        </div>
+
+        <div class="toolbar" aria-label="作品筛选">
+          <label class="search-field">
+            <span aria-hidden="true">⌕</span>
+            <input id="search-input" type="search" placeholder="搜索标题、作者或介绍" autocomplete="off" />
+          </label>
+          <div class="filter-row" id="category-filters" role="list" aria-label="分类">
+            <button class="filter active" data-category="all" type="button">全部</button>
+            <button class="filter" data-category="文字排版" type="button">文字排版</button>
+            <button class="filter" data-category="信息图解" type="button">信息图解</button>
+            <button class="filter" data-category="界面演示" type="button">界面演示</button>
+            <button class="filter" data-category="场景叙事" type="button">场景叙事</button>
+            <button class="filter" data-category="背景特效" type="button">背景特效</button>
+          </div>
+          <label class="sort-field">
+            <span>排序</span>
+            <select id="sort-select">
+              <option value="newest">最新发布</option>
+              <option value="oldest">最早发布</option>
+              <option value="comments">讨论最多</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="feed-status" id="feed-status" aria-live="polite">
+          <span class="status-dot"></span><span id="status-text">正在连接 GitHub Discussions</span>
+          <span class="status-source" id="status-source"></span>
+          <button class="feed-refresh" id="feed-refresh" type="button" disabled>同步最新内容 ↻</button>
+        </div>
+        <div class="masonry" id="discussion-grid" aria-live="polite"></div>
+        <div class="empty-state" id="empty-state" hidden>
+          <span class="empty-glyph">∅</span>
+          <h3>还没有匹配的作品</h3>
+          <p>换个关键词，或者成为第一个提交动效的人。</p>
+          <a class="button button-primary" href="submit.html">提交第一条讨论 <span>↗</span></a>
+        </div>
+      </section>
+
+      <section class="submit-banner">
+        <div>
+          <p class="eyebrow">把前期探索交给 Agent</p>
+          <h2>找到参考，<br />直接开始改。</h2>
+        </div>
+        <div class="submit-banner-side">
+          <p>从一个动效讨论开始。Agent 读取仓库的 README、时间轴和场景组件，再把同一套节奏替换成你的内容。</p>
+          <a class="button button-inverse" href="submit.html">生成 Agent 提示词 <span>↗</span></a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-brand"><span class="brand-mark small" aria-hidden="true"><i></i><i></i><i></i></span><span>OPEN MOTION</span></div>
+      <p>一个由 GitHub Discussions 驱动的开源动效索引。</p>
+      <a href="https://github.com/HKLHaoBin/open-motion" target="_blank" rel="noopener noreferrer">项目仓库 ↗</a>
+    </footer>
+
+    <dialog id="detail-dialog" class="detail-dialog" aria-labelledby="dialog-title" aria-describedby="dialog-body">
+      <button class="dialog-close" id="dialog-close" type="button" aria-label="关闭详情">×</button>
+      <div class="dialog-media" id="dialog-media"></div>
+      <div class="dialog-content">
+        <div class="dialog-meta" id="dialog-meta"></div>
+        <h2 id="dialog-title"></h2>
+        <p id="dialog-author"></p>
+        <div class="dialog-source" id="dialog-source"></div>
+        <div class="dialog-body" id="dialog-body"></div>
+        <div class="dialog-repositories" id="dialog-repositories"></div>
+        <div class="dialog-stack" id="dialog-stack"></div>
+        <div class="dialog-actions" id="dialog-actions"></div>
+        <p class="dialog-feedback" id="dialog-feedback" role="status" aria-live="polite"></p>
+      </div>
+    </dialog>
+
+    <script src="config.js"></script>
+    <script src="auth.js" defer></script>
+    <script src="app.js" defer></script>
+  </body>
+</html>
