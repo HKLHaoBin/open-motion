@@ -4,7 +4,7 @@ window.OPEN_MOTION_CONFIG = {
   repo: "open-motion",
   category: "Show and tell",
   githubUrl: "https://github.com/HKLHaoBin/open-motion",
-  // Set this to the public Cloudflare Worker origin before deploying Pages.
+  // Public canonical Worker origin; the Worker also serves the static site.
   apiBaseUrl: "https://open-motion-api.we3q.workers.dev",
   // Keep OAuth and publishing behind a server-side proxy. Never put a GitHub client secret here.
   oauthUrl: "",

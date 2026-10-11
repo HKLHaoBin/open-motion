@@ -28,8 +28,14 @@ jobs:
           cache-dependency-path: worker/package-lock.json
       - name: Install dependencies
         run: npm ci
+      - name: Check Worker syntax
+        run: npm run check
       - name: Test Worker
         run: npm test
+      - name: Stage public Worker assets
+        run: npm run stage
+      - name: Verify public Worker assets
+        run: npm run verify-assets
       - name: Check Cloudflare credentials
         id: cloudflare
         shell: bash

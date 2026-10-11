@@ -4,6 +4,12 @@
   "main": "src/index.js",
   "compatibility_date": "2025-01-01",
   "observability": { "enabled": true },
+  "assets": {
+    "directory": "./site-dist",
+    "binding": "ASSETS",
+    "not_found_handling": "none",
+    "run_worker_first": true
+  },
   "kv_namespaces": [
     { "binding": "OPEN_MOTION_SESSIONS", "id": "e8860538149c4345a9cc3d88d8bbcfcc", "preview_id": "69f826515da043d5b352125eca97ee60" },
     { "binding": "OPEN_MOTION_FEED", "id": "f5585afebc11443b939bb54074fdc68e", "preview_id": "3f4e807603984fa68dd5ebb416555737" }
@@ -16,8 +22,8 @@
     "SESSION_TTL_SECONDS": "28800",
     "OAUTH_STATE_TTL_SECONDS": "600",
     "GITHUB_API_VERSION": "2022-11-28",
-    "ALLOWED_ORIGIN": "https://hklhaobin.github.io",
-    "PUBLIC_SITE_URL": "https://hklhaobin.github.io/open-motion",
+    "ALLOWED_ORIGIN": "https://open-motion-api.we3q.workers.dev",
+    "PUBLIC_SITE_URL": "https://open-motion-api.we3q.workers.dev",
     "OAUTH_CALLBACK_URL": "https://open-motion-api.we3q.workers.dev/auth/callback",
     "COOKIE_SECURE": "true"
   }

@@ -34,6 +34,8 @@ const request = (url, options = {}) => new Request(url, {
   headers: { Origin: 'https://open-motion.example', ...(options.headers || {}) }
 });
 
+const sameOriginRequest = (url, options = {}) => new Request(url, options);
+
 const jsonRequest = (url, method, body = {}) => request(url, {
   method,
   headers: { 'Content-Type': 'application/json' },
@@ -62,6 +64,50 @@ test('preflight and origin policy are explicit', async () => {
   assert.equal((await body(wrongOrigin)).error, 'origin_not_allowed');
 });
 
+test('same-origin read requests can omit Origin without widening writes', async () => {
+  const env = makeEnv();
+  const status = await handleRequest(sameOriginRequest('https://open-motion.example/api/status'), env);
+  assert.equal(status.status, 200);
+  assert.equal((await body(status)).authenticated, false);
+
+  const feed = await handleRequest(sameOriginRequest('https://open-motion.example/api/feed'), env);
+  assert.equal(feed.status, 503);
+
+  const post = await handleRequest(sameOriginRequest('https://open-motion.example/api/logout', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: '{}'
+  }), env);
+  assert.equal(post.status, 403);
+
+  const differentHost = await handleRequest(sameOriginRequest('https://api.open-motion.example/api/status'), env);
+  assert.equal(differentHost.status, 403);
+
+  const nullOrigin = await handleRequest(new Request('https://open-motion.example/api/status', { headers: { Origin: 'null' } }), env);
+  assert.equal(nullOrigin.status, 403);
+});
+
+test('static assets handle public paths while unknown API routes remain JSON', async () => {
+  const env = makeEnv();
+  const assetRequests = [];
+  env.ASSETS = {
+    fetch: async (assetRequest) => {
+      assetRequests.push(new URL(assetRequest.url).pathname);
+      return new Response('static asset', { status: 200, headers: { 'Content-Type': 'text/plain' } });
+    }
+  };
+
+  const root = await handleRequest(sameOriginRequest('https://open-motion.example/'), env);
+  assert.equal(root.status, 200);
+  assert.equal(await root.text(), 'static asset');
+  assert.deepEqual(assetRequests, ['/']);
+
+  const unknownApi = await handleRequest(request('https://open-motion.example/api/unknown'), env);
+  assert.equal(unknownApi.status, 404);
+  assert.deepEqual(await body(unknownApi), { error: 'not_found' });
+  assert.deepEqual(assetRequests, ['/']);
+});
+
 test('OAuth PKCE state never exposes verifier or secret and creates a secure cookie', async () => {
   const env = makeEnv();
   const response = await handleRequest(jsonRequest('https://api.open-motion.example/auth/start', 'POST'), env);
@@ -78,6 +124,7 @@ test('OAuth PKCE state never exposes verifier or secret and creates a secure coo
   assert.match(stateCookie, /Secure/);
   assert.match(stateCookie, /SameSite=None/);
   assert.match(stateCookie, /Path=\//);
+  assert.doesNotMatch(stateCookie, /Domain=/i);
 });
 
 test('callback creates an opaque session and latest feed uses only the server token', async () => {

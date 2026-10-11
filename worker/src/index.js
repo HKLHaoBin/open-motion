@@ -88,6 +88,10 @@ export const handleRequest = async (request, env = {}) => {
       assertMethod(request, ['POST']);
       return await handleLogout(request, env);
     }
+    const workerRoute = url.pathname === '/api' || url.pathname.startsWith('/api/') || url.pathname === '/auth' || url.pathname.startsWith('/auth/');
+    if (!workerRoute && ['GET', 'HEAD'].includes(request.method) && typeof env.ASSETS?.fetch === 'function') {
+      return env.ASSETS.fetch(request);
+    }
     return jsonResponse({ error: 'not_found' }, 404, request, env);
   } catch (error) {
     return errorResponse(error, request, env);

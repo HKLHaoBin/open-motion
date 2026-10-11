@@ -5,8 +5,10 @@
   "scripts": {
     "test": "node --test test/*.test.js",
     "check": "node --check src/index.js && node --check src/auth.js && node --check src/github.js && node --check src/http.js && node --check src/crypto.js",
-    "dev": "wrangler dev",
-    "deploy": "wrangler deploy"
+    "stage": "node ../scripts/stage-worker-assets.mjs",
+    "verify-assets": "node ../scripts/verify-worker-assets.mjs",
+    "dev": "npm run stage && wrangler dev",
+    "deploy": "npm run stage && npm run verify-assets && wrangler deploy"
   },
   "devDependencies": {
     "wrangler": "^4.44.0"

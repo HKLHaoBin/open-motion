@@ -25,13 +25,36 @@ jobs:
         uses: actions/checkout@v4
       - name: Configure Pages
         uses: actions/configure-pages@v5
-      - name: Prepare site artifact
+      - name: Prepare canonical-site redirect artifact
         shell: bash
         run: |
           mkdir -p _site
-          cp index.html submit.html styles.css app.js auth.js submit.js config.js _site/
-          cp -R assets _site/
-      - name: Upload artifact
+          cat > _site/index.html <<'EOF'
+          <!doctype html>
+          <html lang="zh-CN">
+            <head>
+              <meta charset="utf-8">
+              <meta name="robots" content="noindex">
+              <meta http-equiv="refresh" content="0;url=https://open-motion-api.we3q.workers.dev/">
+              <title>Open Motion 正在跳转</title>
+            </head>
+            <body>
+              <p>Open Motion 正在跳转到正式入口。</p>
+              <p><a href="https://open-motion-api.we3q.workers.dev/">打开 Open Motion</a></p>
+              <script>
+                const canonical = 'https://open-motion-api.we3q.workers.dev';
+                const targetPath = location.pathname.endsWith('/submit.html') ? '/submit.html' : '/';
+                const target = new URL(targetPath, canonical);
+                target.search = location.search;
+                target.hash = location.hash;
+                location.replace(target.href);
+              </script>
+            </body>
+          </html>
+          EOF
+          cp _site/index.html _site/submit.html
+          cp _site/index.html _site/404.html
+      - name: Upload redirect artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: _site

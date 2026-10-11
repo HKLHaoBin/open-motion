@@ -1,15 +1,19 @@
 const jsonHeaders = { 'content-type': 'application/json; charset=utf-8' };
 
+const configuredOrigin = (env) => typeof env.ALLOWED_ORIGIN === 'string' ? env.ALLOWED_ORIGIN.trim() : '';
+
 export const allowedOrigin = (request, env) => {
-  const configured = typeof env.ALLOWED_ORIGIN === 'string' ? env.ALLOWED_ORIGIN.trim() : '';
-  const origin = request.headers.get('Origin') || '';
-  return Boolean(configured && origin === configured);
+  const configured = configuredOrigin(env);
+  const origin = request.headers.get('Origin');
+  if (origin) return Boolean(configured && origin === configured);
+  if (request.method !== 'GET' && request.method !== 'HEAD') return false;
+  try { return Boolean(configured && new URL(request.url).origin === configured); } catch { return false; }
 };
 
 export const corsHeaders = (request, env) => {
   const headers = new Headers();
   const origin = request.headers.get('Origin') || '';
-  if (origin && origin === env.ALLOWED_ORIGIN) {
+  if (origin && origin === configuredOrigin(env)) {
     headers.set('Access-Control-Allow-Origin', origin);
     headers.set('Access-Control-Allow-Credentials', 'true');
   }

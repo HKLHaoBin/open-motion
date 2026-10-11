@@ -1,6 +1,7 @@
 node_modules/
 _site/
 worker/.wrangler/
+worker/site-dist/
 worker/.dev.vars
 worker/.dev.vars.*
 !worker/.dev.vars.example
