@@ -208,6 +208,31 @@
       verification: '已核对视频简介与当前可见评论，未找到可核实 GitHub 仓库；简介列出的 CC BY、CC0 和 Public Domain Mark 音乐来源仍需按原说明署名。',
       stack: ['Opus 5.5', 'Blender', 'Gemini TTS'],
       scene: 'flow'
+    },
+    {
+      id: 'repo-lbeilc-multiplane',
+      title: 'Multiplane：给 AI Agent 用的 HTML 视频渲染器',
+      body: 'Multiplane 是给 AI Agent 使用的开源 HTML 视频渲染器。镜头就是普通网页，画面只由时间 t 决定；渲染器逐帧将网页输出为视频，让创作过程可检查、可复现。它只负责渲染，不内置动画框架或动画库适配，支持运动模糊、硬切保护、三维景深、静帧输出、确定性 lint/verify、机器可读事件流和托管渲染。演示项目使用 Multiplane 渲染，画面全部是网页代码，配乐与音效由程序合成。性能对比仅覆盖三个真实片段：Windows、Ryzen 9 9955HX、RTX 5070 Ti Laptop、1080p 60fps、每段 3 秒，默认设置下与 HyperFrames 0.8.155 对比，三次取中位数且总耗时包含启动和编码。开启运动模糊时，快速排版、局部动画、硬切分别为 72.7 秒、110.2 秒、119.6 秒，对比 HyperFrames 的 173.0 秒、175.8 秒、192.3 秒；关闭运动模糊时分别为 14.9 秒、15.6 秒、15.2 秒，对比 21.1 秒、23.3 秒、26.3 秒。结果只代表这三个片段，不外推到所有镜头。代码仓库采用 Apache-2.0，安装方式为 npm install multiplane。',
+      author: 'LBEILC',
+      category: '背景特效',
+      created_at: '2026-10-15T00:00:00Z',
+      comments: 0,
+      sourceMedia: {
+        kind: 'bilibili',
+        url: 'https://www.bilibili.com/video/BV1g8Jy6FEpD',
+        embedUrl: 'https://player.bilibili.com/player.html?bvid=BV1g8Jy6FEpD&p=1',
+        bvid: 'BV1g8Jy6FEpD'
+      },
+      sourceUrl: 'https://www.bilibili.com/video/BV1g8Jy6FEpD',
+      sourcePlatform: 'Bilibili',
+      attribution: '项目作者：LBEILC；演示视频作者：路北路陈',
+      rights: '许可已注明：LBEILC/Multiplane 仓库代码采用 Apache-2.0；第三方组件、字体和渲染依赖按仓库声明处理。Bilibili 视频、音频和封面不由 Open Motion 托管，权利以原视频页面为准。',
+      verification: '项目仓库和演示视频地址来自公开来源；性能数据仅作为该视频所述的三个片段测试结果展示，不代表所有设备或镜头。',
+      repoUrls: ['https://github.com/LBEILC/Multiplane'],
+      directRepoUrl: 'https://github.com/LBEILC/Multiplane',
+      stack: ['HTML/CSS/JavaScript', 'Node.js', 'Playwright', 'Chromium', 'FFmpeg', 'three.js'],
+      scene: 'orbit',
+      url: ''
     }
   ];
 
