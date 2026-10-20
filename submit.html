@@ -50,8 +50,8 @@
           </div>
           <div class="form-field">
             <label for="agent-goal">告诉 Agent 你想发布什么</label>
-            <textarea id="agent-goal" name="agent-goal" maxlength="1600" placeholder="例如：我想发布一个 30 秒的产品发布片头，内容是新用户首次打开产品，使用黑色和荧光绿，适合在 Open Motion 上分享。"></textarea>
-            <small>只描述你的动效和希望展示的内容。Agent 会在现有项目里完成检查、仓库发布和 Discussion 发布。</small>
+            <textarea id="agent-goal" name="agent-goal" maxlength="1600" placeholder="例如：发布当前仓库里已经完成的 30 秒产品片头，将现有视频和封面上传到 GitHub，并在 Open Motion 创建作品讨论，不改动动效内容。"></textarea>
+            <small>这里上传发布你已经制作的作品，不生成新视频。Agent 会从当前仓库读取动效、上传视频/封面，并用 GitHub CLI 发布 Discussion。</small>
           </div>
           <div class="agent-options">
             <div class="form-field">
@@ -80,9 +80,9 @@
           <p>这页不创建项目，也不要求填写路径。你只需要在已有动效项目的根目录中粘贴一次完整提示词。</p>
           <ol>
             <li>读取现有项目的 README、依赖、源码、时间轴、组件、素材和运行脚本。</li>
-            <li>在原项目上完成检查、预览和必要的动效改造，不创建第二个脚手架项目。</li>
+            <li>检查和预览已有作品，必要时从原工程导出视频/封面，不重新创作动效。</li>
             <li>检查授权、私有素材、密钥和 Git remote；通过 gh auth status 确认发布身份。</li>
-            <li>按需创建或复用公开 GitHub 仓库，推送源码，再用 GitHub CLI 发布 Discussion。</li>
+            <li>创建或复用公开作品仓库，推送源码并上传视频/封面，再用 GitHub CLI 发布 Discussion。</li>
           </ol>
           <div class="form-note">提示词不会包含 GitHub token。Agent 只有在认证失败、授权不清楚或可能破坏现有项目时才应暂停，并返回仓库 URL、Discussion URL 和剩余警告。</div>
         </aside>

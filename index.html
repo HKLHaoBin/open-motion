@@ -112,8 +112,8 @@
           <h2>找到参考，<br />直接开始改。</h2>
         </div>
         <div class="submit-banner-side">
-          <p>从一个动效讨论开始。Agent 读取仓库的 README、时间轴和场景组件，再把同一套节奏替换成你的内容。</p>
-          <a class="button button-inverse" href="submit.html">生成 Agent 提示词 <span>↗</span></a>
+          <p>在作品卡片或详情页复制创作提示词，连同你的需求一起交给 Agent，参考项目的节奏和实现直接制作视频。已有作品？请从顶部「提交动效」入口上传发布。</p>
+          <a class="button button-inverse" href="#explore">选择参考并复制创作提示词 <span>↑</span></a>
         </div>
       </section>
     </main>
@@ -135,6 +135,11 @@
         <div class="dialog-body" id="dialog-body"></div>
         <div class="dialog-repositories" id="dialog-repositories"></div>
         <div class="dialog-stack" id="dialog-stack"></div>
+        <div class="form-field">
+          <label for="dialog-agent-goal">我的视频需求（可选）</label>
+          <textarea id="dialog-agent-goal" maxlength="1600" placeholder="例如：参考这个项目的转场和节奏，制作一条 15 秒竖屏产品介绍视频，使用我的文案和蓝白配色。"></textarea>
+          <small>填写后会与参考项目一起复制；也可以粘贴给 Agent 后再补充。这里只制作视频，不会自动发布。</small>
+        </div>
         <div class="dialog-actions" id="dialog-actions"></div>
         <p class="dialog-feedback" id="dialog-feedback" role="status" aria-live="polite"></p>
       </div>

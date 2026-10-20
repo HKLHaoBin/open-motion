@@ -5,6 +5,15 @@ on:
     branches: [main]
     paths:
       - 'worker/**'
+      - 'index.html'
+      - 'submit.html'
+      - 'app.js'
+      - 'submit.js'
+      - 'auth.js'
+      - 'config.js'
+      - 'styles.css'
+      - 'assets/**'
+      - 'scripts/**'
       - '.github/workflows/deploy-worker.yml'
   workflow_dispatch:
 
@@ -32,6 +41,8 @@ jobs:
         run: npm run check
       - name: Test Worker
         run: npm test
+      - name: Test creation and publishing prompt contracts
+        run: node --test ../scripts/test-prompts.mjs
       - name: Stage public Worker assets
         run: npm run stage
       - name: Verify public Worker assets

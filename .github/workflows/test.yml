@@ -31,6 +31,9 @@ jobs:
       - name: Static syntax
         working-directory: .
         run: node --check app.js && node --check auth.js && node --check submit.js && node --check config.js
+      - name: Creation and publishing prompt contracts
+        working-directory: .
+        run: node --test scripts/test-prompts.mjs
       - name: Public secret scan
         working-directory: .
         shell: bash
