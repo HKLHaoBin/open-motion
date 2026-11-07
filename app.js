@@ -28,6 +28,32 @@
 
   const demoItems = [
     {
+      id: 'repo-code-animation-prompts',
+      title: 'Code Animation Prompts：341 种代码动画风格提示词',
+      body: '包含 341 种风格提示词、196 张参考静帧和离线风格挑选器，覆盖粒子、水墨、剪纸、漫画、电影感等视觉方向。XiaoyeCodes 在原始素材合集上增加 Claude Code / Codex Skill 封装、轻量检索脚本和 HTML 逐帧导出 MP4 工具；实际动画仍需由编程助手编写并渲染。',
+      author: 'XiaoyeCodes',
+      category: '界面演示',
+      created_at: '2026-10-29T10:45:47Z',
+      comments: 0,
+      sourceMedia: {
+        kind: 'bilibili',
+        url: 'https://www.bilibili.com/video/BV1bqx76wEUM',
+        embedUrl: 'https://player.bilibili.com/player.html?bvid=BV1bqx76wEUM&p=1',
+        bvid: 'BV1bqx76wEUM',
+        poster: 'https://raw.githubusercontent.com/XiaoyeCodes/code-animation-prompts/main/docs/images/style-gallery.png'
+      },
+      sourceUrl: 'https://www.bilibili.com/video/BV1bqx76wEUM',
+      shortSourceUrl: 'https://b23.tv/PVObNnQ',
+      sourcePlatform: 'Bilibili',
+      attribution: '原始素材整理者：俯仰观照；技能封装与仓库维护：XiaoyeCodes；第三方与社区贡献者见仓库 LICENSE.md。',
+      rights: '合集允许保留来源后免费使用、修改与分享，禁止包装成付费课程、付费 skills 或其他收费内容出售；第三方文件保留各自许可，整个混合来源合集不能统一标注为 MIT。B站视频仅记录来源链接，不托管视频。',
+      verification: '已核对公开 GitHub README、LICENSE.md 和 B站短链接跳转；341 种风格、196 张参考图为仓库声明。B站页面及元数据受访问限制，视频标题由投稿者提供，未独立验证 Opus / DeepSeek 的模型效果对比。封面使用仓库风格参考图，并非视频截图；日期为仓库创建时间。',
+      repoUrls: ['https://github.com/XiaoyeCodes/code-animation-prompts'],
+      directRepoUrl: 'https://github.com/XiaoyeCodes/code-animation-prompts',
+      stack: ['Agent Skills', 'Claude Code', 'Codex', 'HTML', 'Python', 'Playwright', 'FFmpeg'],
+      scene: 'type'
+    },
+    {
       id: 'repo-wise-wong',
       title: 'claude_剪视频过程motion',
       body: '用 React、SVG 和 Remotion 重建一段 30 秒手绘剪辑动画。机器人依次拖入素材、剪辑片段、添加转场和字幕，源码提供 Film.tsx、timeline.ts 和可复现的预览、渲染、验证脚本。',
