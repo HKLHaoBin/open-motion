@@ -318,6 +318,9 @@
       if (bvid) params.set('bvid', bvid);
       if (cid) params.set('cid', cid);
       params.set('p', page);
+      // Keep the opening frame visible until the viewer chooses to play.
+      params.set('autoplay', '0');
+      params.set('poster', '1');
       return `https://${BILIBILI_PLAYER_HOST}${BILIBILI_PLAYER_PATH}?${params.toString()}`;
     } catch {
       return '';
@@ -555,6 +558,7 @@
     if (!poster) return createMotionPreview(item, large);
     const image = document.createElement('img');
     image.loading = large ? 'eager' : 'lazy';
+    image.referrerPolicy = 'no-referrer';
     image.src = poster;
     image.alt = `${item.title} 参考封面`;
     image.addEventListener('error', () => {
@@ -574,6 +578,7 @@
     let iframe = null;
     let cover = null;
     let status = null;
+    let playButton = null;
 
     const isCurrent = () => !destroyed && session === dialogSession;
     const showStatus = (message) => {
@@ -588,6 +593,7 @@
       if (!isCurrent()) return;
       iframe?.removeAttribute('aria-hidden');
       iframe?.removeAttribute('tabindex');
+      playButton?.remove();
       stage.classList.add('is-loaded');
       dialogMedia.removeAttribute('aria-busy');
     };
@@ -618,42 +624,27 @@
 
     cover = createMediaCover(item, media, true);
     stage.append(cover);
-    dialogMedia.setAttribute('aria-busy', 'true');
+    playButton = document.createElement('button');
+    playButton.type = 'button';
+    playButton.className = 'dialog-media-status button';
+    playButton.textContent = '▶ 播放视频';
+    playButton.setAttribute('aria-label', `播放 ${item.title}`);
+    stage.append(playButton);
 
-    const waitForCover = new Promise((resolve) => {
-      if (cover.tagName !== 'IMG') {
-        resolve();
-        return;
-      }
-      let settled = false;
-      const finish = () => {
-        if (settled) return;
-        settled = true;
-        resolve();
-      };
-      cover.addEventListener('load', finish, { once: true });
-      cover.addEventListener('error', () => {
-        if (isCurrent()) {
-          const preview = createMotionPreview(item, true);
-          cover.replaceWith(preview);
-          cover = preview;
-        }
-        finish();
-      }, { once: true });
-      if (cover.complete) window.queueMicrotask(() => {
-        if (cover.naturalWidth > 0) finish();
-        else cover.dispatchEvent(new Event('error'));
-      });
-    });
-
-    waitForCover.then(() => {
-      if (!isCurrent()) return;
+    // Keep the real cover visible and do not start third-party playback on open.
+    const startPlayback = () => {
+      if (!isCurrent() || iframe) return;
       const embedUrl = normalizeBilibiliPlayerUrl(media.embedUrl);
       if (!embedUrl) {
         showStatus('播放器来源无法核验，已保留封面。');
         dialogMedia.removeAttribute('aria-busy');
         return;
       }
+      dialogMedia.setAttribute('aria-busy', 'true');
+      stage.classList.remove('is-error');
+      status?.remove();
+      playButton.disabled = true;
+      playButton.textContent = '正在加载视频…';
       iframe = document.createElement('iframe');
       iframe.className = 'dialog-player';
       iframe.title = `${item.title} Bilibili 视频`;
@@ -670,12 +661,19 @@
         if (!isCurrent()) return;
         iframe.remove();
         iframe = null;
-        showStatus('视频播放器加载失败，已保留封面。');
+        playButton.disabled = false;
+        playButton.textContent = '加载失败，点击重试播放';
+        stage.classList.remove('is-loaded');
+        stage.classList.add('is-error');
+        stage.append(playButton);
         dialogMedia.removeAttribute('aria-busy');
       }, { once: true });
       stage.append(iframe);
-      iframe.src = embedUrl;
-    });
+      const activatedUrl = new URL(embedUrl);
+      activatedUrl.searchParams.set('autoplay', '1');
+      iframe.src = activatedUrl.href;
+    };
+    playButton.addEventListener('click', startPlayback);
 
     return {
       element: stage,
