@@ -28,6 +28,32 @@
 
   const demoItems = [
     {
+      id: 'repo-dsh-drawai',
+      title: 'DrawAI：在 DeepSeek Harness 中绘图与制作动效视频',
+      body: 'DeepSeek Harness 右侧栏的可编辑画布插件，可用自然语言绘图、修改节点与连线，并组织分镜、预览和渲染动效视频。支持图片与视频复刻、音轨编排和 SVG / PNG 导出。网络受限时可使用投稿者提供的插件 0.4.1 备用下载：https://pan.quark.cn/s/331ad5283f79 ；素材库：https://pan.quark.cn/s/8ba209df0a80 。正常联网时素材库会在首次需要时自动下载并缓存。备用包是 0.4.1，不代表当前最新版，更新及已知问题请以仓库说明为准；遇到问题可在原视频评论或仓库 Issue 反馈。',
+      author: 'fourzkw',
+      category: '界面演示',
+      created_at: '2026-11-07T10:11:31Z',
+      comments: 0,
+      sourceMedia: {
+        kind: 'bilibili',
+        url: 'https://www.bilibili.com/video/BV1cn4E6dE23',
+        embedUrl: 'https://player.bilibili.com/player.html?bvid=BV1cn4E6dE23&cid=43407966750&p=1',
+        bvid: 'BV1cn4E6dE23',
+        poster: 'https://i2.hdslb.com/bfs/archive/540c55be32a24ca65e6f7d3bcfe554e558718817.jpg'
+      },
+      sourceUrl: 'https://www.bilibili.com/video/BV1cn4E6dE23',
+      shortSourceUrl: 'https://b23.tv/XFOFlVp',
+      sourcePlatform: 'Bilibili',
+      attribution: '插件作者与 B站 UP 主：fourzkw；动效素材与镜头卡相关上游作者：Vincentwei1021（https://github.com/Vincentwei1021），具体贡献及第三方来源见仓库 LICENSE。',
+      rights: '插件源码采用 MIT；字体、素材、Shotcraft 和按需下载组件分别适用各自许可，部分上游纹理未逐项列明授权，不能将插件 MIT 许可套用于全部素材。B站视频仅保存来源链接，不托管视频；网盘包由投稿者提供，未下载核验内容。',
+      verification: '已核对 GitHub README、LICENSE、B站短链接跳转及视频公开元数据，视频简介直接指向该仓库。视频标题为“当你可以让大肥鱼制作堪比ops5.5的视频？！”；模型效果对比未独立验证。网盘为投稿者提供的备用链接，未验证包内容及与当前代码的一致性；日期为视频发布时间。',
+      repoUrls: ['https://github.com/fourzkw/dsh-drawai'],
+      directRepoUrl: 'https://github.com/fourzkw/dsh-drawai',
+      stack: ['DeepSeek Harness', 'DrawAI', 'TypeScript', 'SVG', 'FFmpeg'],
+      scene: 'editor'
+    },
+    {
       id: 'repo-code-animation-prompts',
       title: 'Code Animation Prompts：341 种代码动画风格提示词',
       body: '包含 341 种风格提示词、196 张参考静帧和离线风格挑选器，覆盖粒子、水墨、剪纸、漫画、电影感等视觉方向。XiaoyeCodes 在原始素材合集上增加 Claude Code / Codex Skill 封装、轻量检索脚本和 HTML 逐帧导出 MP4 工具；实际动画仍需由编程助手编写并渲染。',
